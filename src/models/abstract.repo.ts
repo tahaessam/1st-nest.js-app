@@ -9,7 +9,7 @@ import {
   HydratedDocument,
   Types,
 } from 'mongoose';
-
+//!abstract repository class to be extended by all repositories
 export abstract class AbstractRepository<
   T extends Document,
   CreateDTO extends AnyKeys<T> = AnyKeys<T>,

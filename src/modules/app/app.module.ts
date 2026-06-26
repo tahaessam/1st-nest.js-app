@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '../../config/configuration';
 import { UserModule } from '../user/user.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -18,11 +19,10 @@ import { UserModule } from '../user/user.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('database.url'),
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
       }),
     }), //! such as MongooseModule, TypeOrmModule, and GraphQLModule, can be treated as imports
     UserModule,
+    AuthModule,
   ],
 
   controllers: [AppController],

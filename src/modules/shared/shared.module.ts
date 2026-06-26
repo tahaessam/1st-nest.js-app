@@ -1,21 +1,32 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Product, ProductSchema } from '../../models/product/product.schema';
+import { Admin, AdminSchema } from '../../models/admin/admin.schema';
+import { AdminRepository } from '../../models/admin/admin.repo';
+import { Brand, BrandSchema } from '../../models/brand/brand.schema';
+import { BrandRepository } from '../../models/brand/brand.repo';
 import {
-  Admin,
-  AdminSchema,
+  Category,
+  CategorySchema,
+} from '../../models/category/category.schema';
+import { CategoryRepository } from '../../models/category/category.repo';
+import {
   Customer,
   CustomerSchema,
-  Seller,
-  SellerSchema,
-  User,
-  UserSchema,
-} from '../../models/user/user.schema';
-import { UserRole } from '../../common/decorators/enum/role.enum';
+} from '../../models/customer/customer.schema';
+import { CustomerRepository } from '../../models/customer/customer.repo';
+import { Product, ProductSchema } from '../../models/product/product.schema';
+import { ProductRepository } from '../../models/product/product.repo';
+import { Seller, SellerSchema } from '../../models/seller/seller.schema';
+import { SellerRepository } from '../../models/seller/seller.repo';
+import { User, UserSchema } from '../../models/user/user.schema';
+import { UserRepository } from '../../models/user/user.repo';
+import { UserRole } from '../../common/enum/role.enum';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
+      { name: Brand.name, schema: BrandSchema },
+      { name: Category.name, schema: CategorySchema },
       { name: Product.name, schema: ProductSchema },
       {
         name: User.name,
@@ -28,6 +39,24 @@ import { UserRole } from '../../common/decorators/enum/role.enum';
       },
     ]),
   ],
-  exports: [MongooseModule],
+  providers: [
+    AdminRepository,
+    BrandRepository,
+    CategoryRepository,
+    CustomerRepository,
+    ProductRepository,
+    SellerRepository,
+    UserRepository,
+  ],
+  exports: [
+    MongooseModule,
+    AdminRepository,
+    BrandRepository,
+    CategoryRepository,
+    CustomerRepository,
+    ProductRepository,
+    SellerRepository,
+    UserRepository,
+  ],
 })
 export class SharedModule {}

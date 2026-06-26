@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { UserRole } from '../../common/decorators/enum/role.enum';
-import { provider_role } from '../../common/decorators/enum/provider.enum';
+import { UserRole } from '../../common/enum/role.enum';
+import { provider_role } from '../../common/enum/provider.enum';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -24,41 +24,16 @@ export class User {
   @Prop({ trim: true })
   phoneNumber!: string;
 
-  @Prop({ enum: provider_role, default: provider_role.User })
+  @Prop({ type: String, enum: provider_role, default: provider_role.User })
   provider!: provider_role;
 
-  @Prop({ enum: UserRole, required: true, default: UserRole.user })
+  @Prop({
+    type: String,
+    enum: UserRole,
+    required: true,
+    default: UserRole.user,
+  })
   role!: UserRole;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-
-@Schema()
-export class Admin {
-  @Prop({ default: false })
-  isSuperAdmin!: boolean;
-}
-
-export const AdminSchema = SchemaFactory.createForClass(Admin);
-
-@Schema()
-export class Seller {
-  @Prop({ trim: true })
-  storeName?: string;
-
-  @Prop({ trim: true })
-  storeDescription?: string;
-
-  @Prop({ default: false })
-  isVerified!: boolean;
-}
-
-export const SellerSchema = SchemaFactory.createForClass(Seller);
-
-@Schema()
-export class Customer {
-  @Prop({ trim: true })
-  address?: string;
-}
-
-export const CustomerSchema = SchemaFactory.createForClass(Customer);

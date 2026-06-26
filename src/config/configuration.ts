@@ -19,6 +19,10 @@ export default () => ({
     secretKey: process.env.S3_SECRET_KEY,
     bucketName: process.env.S3_BUCKET_NAME,
   },
+  jwt: {
+    accesssecret: process.env.SecretKey,
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  },
 });
 //parseInt need int so we add (as string) to avoid error if the value is undefined or null
 // we can also use Joi to validate the env variables and throw an error if they are not valid

@@ -1,7 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types, Document } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { Brand } from '../brand/brand.schema';
+import { Category } from '../category/category.schema';
+import { Seller } from '../seller/seller.schema';
 
-export type ProductDocument = Product & Document;
+export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({ timestamps: true })
 export class Product {
@@ -32,11 +35,14 @@ export class Product {
   })
   quantity!: number;
 
-  @Prop({
-    required: true,
-    trim: true,
-  })
-  category!: string;
+  @Prop({ type: Types.ObjectId, ref: Category.name, required: true })
+  category!: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId, ref: Brand.name })
+  brand?: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId, ref: Seller.name, required: true })
+  seller!: Types.ObjectId;
 
   @Prop({
     default: [],

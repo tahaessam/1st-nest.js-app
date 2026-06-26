@@ -1,5 +1,5 @@
-import { UserRole } from '../../../common/decorators/enum/role.enum';
-import { provider_role } from '../../../common/decorators/enum/provider.enum';
+import { UserRole } from '../../../common/enum/role.enum';
+import { provider_role } from '../../../common/enum/provider.enum';
 
 export class CreateUserDto {
   username!: string;
