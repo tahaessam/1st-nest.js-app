@@ -1,28 +1,35 @@
-// we make this file to add logic to read the env variables and return them in a structured way
-
 export default () => ({
-  port: parseInt(process.env.PORT as string) || 3000,
+  port: parseInt(process.env.PORT ?? '3000'),
+
   database: {
     url: process.env.DB_URL,
-    accessKey: process.env.DB_ACCESS_KEY,
   },
+
   redis: {
     url: process.env.REDIS_URL,
   },
-  user: {
-    email: process.env.USER_EMAIL,
-    pass: process.env.USER_PASS,
+
+  jwt: {
+    accessSecret: process.env.JWT_ACCESS_SECRET,
+    accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN,
+
+    refreshSecret: process.env.JWT_REFRESH_SECRET,
+    refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
   },
-  secretKey: process.env.SecretKey,
+
+  mailer: {
+    host: process.env.MAIL_HOST,
+    port: parseInt(process.env.MAIL_PORT ?? '587'),
+    secure: process.env.MAIL_SECURE === 'true',
+
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
+    from: process.env.MAIL_FROM,
+  },
+
   s3: {
     accessKey: process.env.S3_ACCESS_KEY,
     secretKey: process.env.S3_SECRET_KEY,
     bucketName: process.env.S3_BUCKET_NAME,
   },
-  jwt: {
-    accesssecret: process.env.SecretKey,
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  },
 });
-//parseInt need int so we add (as string) to avoid error if the value is undefined or null
-// we can also use Joi to validate the env variables and throw an error if they are not valid
